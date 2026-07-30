@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="ad.size" content="width=1080,height=1920">
+	<title>ollin vertical video</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+
+	<style>
+		
+		* {
+			box-sizing: border-box;
+		}
+		button {
+			padding: 0;
+			border: 0;
+			appearance: none;
+			background: none;
+			cursor: pointer;
+		}
+		.nowrap {
+			white-space: nowrap;
+		}
+		.ollincd {
+			text-decoration: none;
+		}
+		.ollincd-inner {
+			aspect-ratio: 9 / 16;;
+			/* height: 1920px;
+			width: 1080px; */
+			width: 100vw;
+			max-width: 1080px;
+			margin-inline: auto;			
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			position: relative;
+			background-color: #fff;
+			z-index: 0;
+			color: #000 !important;
+			text-align: center;
+			outline: 1px solid #ebebeb;
+		}
+
+		.ollincd-video-container {
+			aspect-ratio: 135 / 76;
+			border-color: #EE3C71;
+			position: relative;
+			video {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.ollin-bottles {
+			flex-grow: 1;
+			width: 60%;
+			aspect-ratio: 1;
+			justify-content: center;
+			position: relative;
+			perspective: 500px;
+		}
+		.ollin-bottle {
+			max-height: 95%;
+			position: absolute;
+			left: 50%;
+			top: 0;
+			translate: -50% 0;
+			transform-origin: center bottom;
+			opacity: 0;
+			transition: transform .75s, opacity 1.5s;
+
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.ollin-bottle-1 {
+			aspect-ratio: 64 / 135;
+			max-height: 78%;
+			top: auto;
+			bottom: 5%;
+			transform: translateX(59%) translateZ(-150px);
+			transition-delay: .35s;
+		}
+		.ollin-bottle-2 {
+			aspect-ratio: 110 / 167;
+			bottom: 0;
+			top: auto;
+			z-index: 1;
+			transform: translateX(-31%) translateZ(-150px);
+		}
+		.ollin-bottle-3 {
+			aspect-ratio: 58 / 135;
+			transform: translateZ(-150px);
+			transition-delay: .2s;
+		}
+		.ollincd-logo {
+			filter: blur(50px);
+			aspect-ratio: 20 / 7;	
+			width: clamp(12.5rem, -5.5rem + 60vw, 31.25rem);
+			margin-top: clamp(2.5rem, -2.3rem + 16vw, 7.5rem);
+			margin-bottom: clamp(1.875rem, -0.938rem + 10.71vw, 3.75rem);
+			margin-inline: auto;
+			transition: filter 1s linear;
+			img {
+				width: 100%;
+				height: 100%;
+				max-width: 500px;
+			}
+		}
+		.ollincd-motto {
+			text-transform: uppercase;
+			font-family: "Google Sans", sans-serif;
+			font-size: clamp(1.125rem, -0.555rem + 5.6vw, 2.875rem);
+			font-weight: 600;
+			text-align: center;
+			margin-top: clamp(1.563rem, -0.781rem + 8.93vw, 3.125rem);
+			margin-bottom: clamp(1.25rem, -2.893rem + 13.81vw, 4.875rem);
+		}
+		.ollincd-ads {
+			color: #cdcdcd;
+			font-size: clamp(0.75rem, 0.464rem + 0.95vw, 1rem);
+			margin-bottom: clamp(1.563rem, -1.719rem + 12.5vw, 3.75rem);
+		}
+		.ollincd-mute {
+			position: absolute;
+			width: clamp(1.25rem, 0.179rem + 3.57vw, 2.188rem);
+			aspect-ratio: 1;
+			z-index: 1;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			bottom: 5px;
+			left: 5px;
+		}
+		.mute-off {
+			background-image: url("img/mute-off.webp");
+		}
+		.mute-on {
+			background-image: url("img/mute-on.webp");
+		}
+		
+		/* animation on load */
+		.loaded {
+			.ollincd-logo {
+				filter: blur(0px);
+			}			
+			.ollin-bottle {
+				opacity: 1;
+			}
+			.ollin-bottle-1 {
+				transform: translateX(59%) translateZ(0px);
+			}
+			.ollin-bottle-2 {
+				transform: translateX(-31%) translateZ(0px);
+			}
+			.ollin-bottle-3 {
+				transform: translateZ(0px);
+			}
+		}
+		/* /animation on load */
+	</style>
+
+</head>
+<body style="margin: 0; display: flex; flex-direction: column; min-height: 100%;">
+	
+
+	<!-- banner START -->
+	<a href="" class="ollincd "  id="click-url">
+		<div class="ollincd-inner" id="inner">
+			<div class="ollincd-video-container">
+				<video autoplay  muted loop playsinline>
+					<source src="img/video.mp4" type="video/mp4">
+				</video>
+				<button class="ollincd-mute mute-off" onclick="ollincd.toggleMute(this)" id="muteButton" aria-pressed="false" aria-label="Включить звук"></button>
+			</div>
+			<div class="ollincd-logo">
+				<img src="img/logo.svg" alt="OLLIN professional логотип" />
+			</div>
+			<div class="ollin-bottles">
+				<div class="ollin-bottle ollin-bottle-2"><img src="img/bottle-2.png" alt="" /></div>
+				<div class="ollin-bottle ollin-bottle-3"><img src="img/bottle-3.png" alt="" /></div>
+				<div class="ollin-bottle ollin-bottle-1"><img src="img/bottle-1.png" alt="" /></div>
+			</div>
+			<div class="ollincd-motto">
+				для тех, кто ценит результат
+			</div>
+			<div class="ollincd-ads">
+				Реклама. ООО «Астория Косметик», ИНН 7701836734
+			</div>
+
+		</div>
+	</a>
+	<!-- banner END -->
+
+
+
+	<script>
+		(() => {
+		const target = document.querySelector('#inner');
+		if (!target) return;
+
+		let prev = 0;
+		function measure() {
+			const h = target.offsetHeight;
+			if (h > 0 && h !== prev) {
+			prev = h;
+			parent.postMessage({ type: 'premiumbar-resize', height: h }, '*');
+			}
+		}
+		new ResizeObserver(() => { measure(); }).observe(target);
+		measure();
+
+		window.addEventListener('message', (e) => {
+			if (!e.data || typeof e.data.type !== 'string') return;
+			if (e.data.type === 'set-click-url') {
+			const a = document.querySelector('#click-url');
+			if (!a) return;
+			a.href = e.data.url;
+			if (e.data.target) a.target = e.data.target;
+			if (e.data.rel) a.rel = e.data.rel;
+			}
+		});
+		})();
+	</script>		
+
+</body>
+<!-- 
+<script src="gsap.min.js"></script>
+<script src="ScrollTrigger.min.js"></script>
+-->
+<script src="index.js"></script>
+</html>
