@@ -17,21 +17,31 @@ var ollincd = {
 		const bottle1 = document.querySelector('.ollin-bottle-1');
 		const bottle2 = document.querySelector('.ollin-bottle-2');
 		const bottle3 = document.querySelector('.ollin-bottle-3');
+		const motto = document.querySelector('.ollincd-motto');
+		const ads = document.querySelector('.ollincd-ads');
 
-		if (!logo || !bottle1 || !bottle2 || !bottle3) return;
+		if (!logo || !bottle1 || !bottle2 || !bottle3 || !motto || !ads) return;
 
-		// Логотип появляется первым
-		const logoProgress = this.rangeProgress(progress, 0.02, 0.18);
+
+		// 1. ЛОГО
+		const logoProgress =
+			this.rangeProgress(progress, 0.00, 0.15);
 
 		logo.style.opacity = logoProgress;
+
 		logo.style.filter =
 			`blur(${50 * (1 - logoProgress)}px)`;
 
 
-		// Банки появляются по очереди
-		const p2 = this.rangeProgress(progress, 0.20, 0.40);
-		const p3 = this.rangeProgress(progress, 0.43, 0.63);
-		const p1 = this.rangeProgress(progress, 0.66, 0.86);
+		// 2. БУТЫЛКИ
+		const p2 =
+			this.rangeProgress(progress, 0.16, 0.32);
+
+		const p3 =
+			this.rangeProgress(progress, 0.30, 0.46);
+
+		const p1 =
+			this.rangeProgress(progress, 0.44, 0.60);
 
 
 		bottle2.style.opacity = p2;
@@ -47,14 +57,32 @@ var ollincd = {
 
 		bottle1.style.transform =
 			`translateX(59%) translateZ(${-150 * (1 - p1)}px)`;
+
+
+		// 3. СЛОГАН + ДИСКЛЕЙМЕР
+		const textProgress =
+			this.rangeProgress(progress, 0.64, 0.88);
+
+
+		motto.style.opacity = textProgress;
+
+		motto.style.transform =
+			`translateY(${40 * (1 - textProgress)}px)`;
+
+
+		ads.style.opacity = textProgress;
+
+		ads.style.transform =
+			`translateY(${25 * (1 - textProgress)}px)`;
 	},
 
 
 	updateFromLocalScroll: function() {
 
 		// Если progress приходит от родительской страницы,
-		// используем его
+		// используем его.
 		if (this._scrollProgressFromParent) return;
+
 
 		const banner =
 			document.querySelector('.ollincd-inner');
@@ -67,8 +95,10 @@ var ollincd = {
 			banner.offsetHeight - window.innerHeight
 		);
 
+
 		const progress =
 			window.scrollY / maxScroll;
+
 
 		this.setScrollProgress(progress);
 	},
@@ -90,7 +120,8 @@ var ollincd = {
 		const video =
 			sender.parentNode.querySelector('video');
 
-		const isMuted = video.muted;
+		const isMuted =
+			video.muted;
 
 
 		video.muted = !isMuted;
@@ -100,6 +131,7 @@ var ollincd = {
 			'aria-pressed',
 			isMuted
 		);
+
 
 		sender.setAttribute(
 			'aria-label',
@@ -112,12 +144,15 @@ var ollincd = {
 
 
 
-window.addEventListener('load', function() {
+window.addEventListener(
+	'load',
+	function() {
 
-	ollincd.setScrollProgress(0);
-	ollincd.updateFromLocalScroll();
+		ollincd.setScrollProgress(0);
+		ollincd.updateFromLocalScroll();
 
-});
+	}
+);
 
 
 
@@ -149,7 +184,7 @@ window.addEventListener(
 	function(e) {
 
 		// Резервный вариант для iframe.
-		// Скролл страницы при этом не блокируется.
+		// Скролл основной страницы не блокируется.
 
 		if (ollincd._scrollProgressFromParent) return;
 
@@ -161,8 +196,6 @@ window.addEventListener(
 		);
 
 
-		// Если iframe сам скроллится,
-		// wheel здесь не используем
 		if (localMaxScroll > 1) return;
 
 
@@ -187,8 +220,8 @@ window.addEventListener(
 
 
 
-// Если баннер находится в iframe,
-// родительская страница может передавать:
+// Для размещения баннера в iframe.
+// Родительская страница может передавать:
 //
 // {
 //     type: 'scroll-progress',
@@ -208,6 +241,7 @@ window.addEventListener(
 
 
 		ollincd._scrollProgressFromParent = true;
+
 
 		ollincd.setScrollProgress(
 			e.data.progress
