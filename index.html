@@ -72,7 +72,7 @@
 			translate: -50% 0;
 			transform-origin: center bottom;
 			opacity: 0;
-			will-change: transform, opacity;
+			transition: transform .75s, opacity 1.5s;
 
 			img {
 				width: 100%;
@@ -85,6 +85,7 @@
 			top: auto;
 			bottom: 5%;
 			transform: translateX(59%) translateZ(-150px);
+			transition-delay: .35s;
 		}
 		.ollin-bottle-2 {
 			aspect-ratio: 110 / 167;
@@ -96,6 +97,7 @@
 		.ollin-bottle-3 {
 			aspect-ratio: 58 / 135;
 			transform: translateZ(-150px);
+			transition-delay: .2s;
 		}
 		.ollincd-logo {
 			filter: blur(50px);
@@ -104,8 +106,7 @@
 			margin-top: clamp(2.5rem, -2.3rem + 16vw, 7.5rem);
 			margin-bottom: clamp(1.875rem, -0.938rem + 10.71vw, 3.75rem);
 			margin-inline: auto;
-			opacity: 0;
-			will-change: filter, opacity;
+			transition: filter 1s linear;
 			img {
 				width: 100%;
 				height: 100%;
@@ -146,8 +147,25 @@
 			background-image: url("img/mute-on.webp");
 		}
 		
-
-		/* logo + bottles are controlled by scroll in index.js */
+		/* animation on load */
+		.loaded {
+			.ollincd-logo {
+				filter: blur(0px);
+			}			
+			.ollin-bottle {
+				opacity: 1;
+			}
+			.ollin-bottle-1 {
+				transform: translateX(59%) translateZ(0px);
+			}
+			.ollin-bottle-2 {
+				transform: translateX(-31%) translateZ(0px);
+			}
+			.ollin-bottle-3 {
+				transform: translateZ(0px);
+			}
+		}
+		/* /animation on load */
 	</style>
 
 </head>
